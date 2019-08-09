@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 //components
 import Home from './pages/Home.jsx';
+import MoviePage from './pages/MoviePage.jsx';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faHumidity
@@ -21,6 +23,7 @@ export default function App() {
       <Router>
         <Switch>
           <Route exact path='/' component={Home}/>
+          <Route path='/movie/:id' component={MoviePage}/>
         </Switch>
       </Router>
     </div>

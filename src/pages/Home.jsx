@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+
 import  { MOVIEDB_KEY } from '../env.json';
 //components
 import Movie from '../components/Movie.jsx';
+
+const MoviesContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+`;
 
 export default function Home() {
     const [recentMovies, setRecentMovies] = useState([]);
@@ -21,7 +29,9 @@ export default function Home() {
     }, [])
     return (
         <div>
-            { recentMovies.map(movie => <Movie key={movie.id} {...movie} /> )}
+            <MoviesContainer>
+                { recentMovies.map(movie => <Movie key={movie.id} {...movie} /> )}
+            </MoviesContainer>
         </div>
     )
 }
