@@ -35,8 +35,8 @@ const InfoContainer = styled.div`
 `;
 
 export default function Movie({ id, title, poster_path, vote_average }) {
-    console.log(poster_path);
     const size = images.poster_sizes[0];
+    console.log(poster_path, size);
     return (
         <MovieContainer>
             <Link to={`/movie/${id}`}>
