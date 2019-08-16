@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { images } from '../config/moviedb.json';
 import  { MOVIEDB_KEY } from '../env.json';
 //components
 import Movies from '../components/Movies.jsx';
@@ -24,7 +24,10 @@ export default function Home({windowWidth, mobile}) {
     }, [])
     return (
         <div>
-            <Movies movies={recentMovies} windowWidth={windowWidth} />
+            <Movies 
+                movies={recentMovies} 
+                windowWidth={windowWidth} 
+                size={images.poster_sizes[0]} />
         </div>
     )
 }
