@@ -77,8 +77,6 @@ export default function MoviePage({match, mobile}) {
         .then(res => {
             const { data, status } = res;
             if(status === 200) {
-                console.log(data);
-                const { id } = data;
                 setMovie(data);
                 return axios.get(`https://api.themoviedb.org/3/movie/${match.params.id}/credits?api_key=${MOVIEDB_KEY}`)
             }
@@ -86,7 +84,6 @@ export default function MoviePage({match, mobile}) {
         .then(res => {
             const { data, status } = res;
             if(status === 200) {
-                console.log(data);
                 const { cast, crew } = data;
                 setCrew(crew);
                 setCast(cast);
@@ -97,7 +94,6 @@ export default function MoviePage({match, mobile}) {
             const { data, status } = res;
             if(status === 200) {
                 const { results } = data;
-                console.log(data);
                 setRecommendations(results);
                 return axios.get(`https://api.themoviedb.org/3/movie/${match.params.id}/similar?api_key=${MOVIEDB_KEY}`)
             }
@@ -106,7 +102,6 @@ export default function MoviePage({match, mobile}) {
             const { data, status } = res;
             if(status === 200) {
                 const { results } = data;
-                console.log(data);
                 setSimilar(results);
             }
         })

@@ -9,7 +9,7 @@ const MoviesContainer = styled.div`
     flex-direction: row;
     flex-wrap: no-wrap;
     transform: translateX(${props => props.translation}px);
-    transition: transform 2s;
+    transition: transform 1.5s;
 `;
 
 const FabContainer = styled.div`
