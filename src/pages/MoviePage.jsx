@@ -151,19 +151,21 @@ export default function MoviePage({match, mobile, windowWidth}) {
             (<React.Fragment>
                 {Object.keys(movie).length > 0 ? 
                 (<React.Fragment>
-                    <MovieHeader url={`https://image.tmdb.org/t/p/${images.backdrop_sizes[2]}/${backdrop_path}`}>
-                    </MovieHeader>
+                    {backdrop_path ? <MovieHeader url={`https://image.tmdb.org/t/p/${images.backdrop_sizes[2]}/${backdrop_path}`}>
+                    </MovieHeader> : null}
                     <TitleSection mobile={mobile}>
                         <TitleInfo mobile={mobile}>
                             <div>
-                                <h1>{title}</h1>
+                                <h1 style={{ padding: 20 }}>{title}</h1>
                                 <Tagline>{tagline}</Tagline>
                             </div>
                             {vote_average === 0 ? 'N/A' : <VisualRating rating={vote_average} />}
                         </TitleInfo>
                         <InfoSection>
-                            <h5 style={{ marginBottom: -20 }}>overview</h5>
-                            <Overview>{overview}</Overview>
+                            <div>
+                                <h3 style={{ marginBottom: -20 }}>overview</h3>
+                                <Overview>{overview}</Overview>
+                            </div>
                             <h5>Release date: {date ? date.toLocaleDateString('en-US') : ''} </h5>
                             <Genres>
                                 {genres.map(genre => 

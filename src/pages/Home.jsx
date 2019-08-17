@@ -62,7 +62,7 @@ export default function Home({windowWidth, mobile}) {
                 windowWidth={windowWidth}
                 size={mobile ? images.poster_sizes[4] : images.poster_sizes[3]}
                 {...latestMovie}/>
-            <Title icon='popcorn'>Now Showing</Title>
+            <Title icon='ticket-alt'>Now Showing</Title>
             <MovieSection>
                 <Movies 
                     movies={nowMovies} 

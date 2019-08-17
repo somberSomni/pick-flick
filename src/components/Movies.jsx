@@ -8,6 +8,8 @@ const MoviesContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: no-wrap;
+    align-items: ${props => props.limited ? 'center' : 'none'};
+    justify-content: ${props => props.limited ? 'center' : 'none'};
     transform: translateX(${props => props.translation}px);
     transition: transform 1.5s;
 `;
@@ -64,6 +66,7 @@ export default function Movies({movies, windowWidth, size}) {
     }
     return (
         <Container>
+            {index > 0 ? 
             <FabContainer left={true}>
                 <Fab 
                     onClick={() => {handleClick(false)}}
@@ -72,7 +75,8 @@ export default function Movies({movies, windowWidth, size}) {
                     <FontAwesomeIcon 
                         icon={['far', 'chevron-left']} />
                 </Fab>
-            </FabContainer>
+            </FabContainer> : null}
+            {index + numOfMovies < movies.length ? 
             <FabContainer left={false}>
                 <Fab 
                     onClick={() => {handleClick(true)}}
@@ -81,8 +85,9 @@ export default function Movies({movies, windowWidth, size}) {
                     <FontAwesomeIcon 
                         icon={['far', 'chevron-right']} />
                 </Fab>
-            </FabContainer>
+            </FabContainer> : null }
             <MoviesContainer 
+                limited={movies.length <= numOfMovies}
                 translation={translation}>
                 { movies.map(movie => 
                 <Movie 

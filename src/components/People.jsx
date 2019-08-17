@@ -10,6 +10,7 @@ const Profile = styled.img`
     background-size: cover;
     background-position: center;
     box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.4);
+    margin: 10px;
 `;
 
 const Container = styled.div`
@@ -21,7 +22,6 @@ const Container = styled.div`
     justify-content: ${props => props.mobile ? 'space-between' : 'flex-start'};
     align-items:  center;
     align-content: center;
-    padding: 10px;
     height: ${props => props.mobile ? 'auto' : '175px'};
     box-shadow: none;
     margin: 2px;
@@ -38,8 +38,8 @@ export default function People({character, size, profile_path, name, i, mobile})
             odd={ i % 2 !== 0}
             mobile={mobile}>
             <Profile url={profile_path ? `https://image.tmdb.org/t/p/${size}/${profile_path}` : profile} />
-            <h5 style={{ marginBottom: -5 }}>{name}</h5>
-            <p style={{ fontSize: '0.8em'}}>{character}</p>
+            <h5 style={{ margin: mobile ? 10 : -5 }}>{name}</h5>
+            <p style={{ fontSize: '0.8em',  margin: mobile ? 10 : 0 }}>{character}</p>
         </Container>
     )
 }

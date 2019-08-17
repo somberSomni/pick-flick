@@ -6,13 +6,14 @@ import Home from './pages/Home.jsx';
 import MoviePage from './pages/MoviePage.jsx';
 import AppHeader from './components/AppHeader.jsx';
 import Search from './pages/Search.jsx';
+import Footer from './components/Footer.jsx';
 import { library } from '@fortawesome/fontawesome-svg-core';
 // import {
 //   faHumidity
 // } from '@fortawesome/pro-duotone-svg-icons';
 import { faMapMarkerCheck } from '@fortawesome/pro-solid-svg-icons';
 import { faChevronLeft, faChevronRight, faFilm, faHandPointer, faSearch } from '@fortawesome/pro-regular-svg-icons';
-import { faArrowCircleRight, faArrowCircleLeft, faPopcorn, faThumbsUp } from '@fortawesome/pro-light-svg-icons';
+import { faArrowCircleRight, faArrowCircleLeft, faPopcorn, faThumbsUp, faRoute, faTicketAlt } from '@fortawesome/pro-light-svg-icons';
 import './App.css';
 library.add(
   faMapMarkerCheck,
@@ -24,7 +25,9 @@ library.add(
   faArrowCircleRight,
   faArrowCircleLeft, 
   faPopcorn, 
-  faThumbsUp
+  faThumbsUp,
+  faRoute,
+  faTicketAlt
 );
 
 export default function App() {
@@ -79,6 +82,7 @@ export default function App() {
               setSearching={setSearching}
               {...props} />} />
         </Switch>
+        <Footer />
       </Router>
     </div>
   );

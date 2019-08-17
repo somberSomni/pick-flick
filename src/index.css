@@ -13,6 +13,16 @@ button {
   cursor: pointer;
 }
 
+a { 
+  color: rgb(102, 154, 233);
+  text-decoration: underline;
+}
+
+a:visited {
+  color: rgb(102, 154, 233);
+  text-decoration: underline white;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

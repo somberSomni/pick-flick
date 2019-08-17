@@ -37,6 +37,12 @@ const MainIcon = styled.div`
     flex-wrap: no-wrap;
     justify-content: center;
     align-items: center;
+    color: #333;
+    opacity: 1;
+    transition: opacity 1s;
+    &:hover {
+        opacity: 0.6;
+    }
 `;
 
 export default function AppHeader({searching, handleSubmit}) {
