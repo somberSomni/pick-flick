@@ -176,6 +176,8 @@ export default function MoviePage({match, mobile, windowWidth}) {
                         </InfoSection>
                     </TitleSection>
                 </React.Fragment>) : null }
+                {similar.length > 0  ? 
+                (<React.Fragment>
                 <Title icon='popcorn'>Similar Movies</Title>
                 <MovieSection>
                     <Movies 
@@ -183,15 +185,19 @@ export default function MoviePage({match, mobile, windowWidth}) {
                         windowWidth={windowWidth} 
                         size={images.poster_sizes[0]} />
                 </MovieSection>
-                <Title icon='thumbs-up'>Recommended Movies</Title>
-                <MovieSection>
-                    <Movies 
-                        movies={recommendations} 
-                        windowWidth={windowWidth} 
-                        size={images.poster_sizes[0]} />
-                </MovieSection>
+                </React.Fragment>) : null }
+                {recommendations.length > 0  ? 
+                (<React.Fragment>
+                    <Title icon='thumbs-up'>Recommended Movies</Title>
+                    <MovieSection>
+                        <Movies 
+                            movies={recommendations} 
+                            windowWidth={windowWidth} 
+                            size={images.poster_sizes[0]} />
+                    </MovieSection>
+                </React.Fragment>) : null }
                 <Title>Cast <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>in order of appearance</span></Title>
-                <Cast>
+                {cast.length > 0 ? <Cast>
                     { cast.slice(0,20).map((actor, i) => 
                         <People 
                             key={actor.credit_id} 
@@ -201,7 +207,7 @@ export default function MoviePage({match, mobile, windowWidth}) {
                             {...actor} />
                         )
                     }
-                </Cast>
+                </Cast> : <h1>Currently No Cast Info</h1>}
             </React.Fragment>)  }
         </Container>
     )
