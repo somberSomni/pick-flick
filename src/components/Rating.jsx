@@ -21,6 +21,7 @@ const VisualContainer = styled.div`
     position: relative;
     width: ${props => props.size || 100}px;
     height: ${props => props.size || 100}px;
+    margin-bottom: 10px;
 `;
 
 export default function Rating({ rating }) {

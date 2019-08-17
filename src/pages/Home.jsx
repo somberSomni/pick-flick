@@ -5,7 +5,8 @@ import  { MOVIEDB_KEY } from '../env.json';
 //components
 import Movies from '../components/Movies.jsx';
 import Feature from '../components/Feature.jsx';
-
+import MovieSection from '../components/MovieSection.jsx';
+import Title from '../components/Title.jsx';
 
 export default function Home({windowWidth, mobile}) {
     const [recentMovies, setRecentMovies] = useState([]);
@@ -40,10 +41,13 @@ export default function Home({windowWidth, mobile}) {
                 windowWidth={windowWidth}
                 size={mobile ? images.poster_sizes[4] : images.poster_sizes[3]}
                 {...latestMovie}/>
-            <Movies 
-                movies={recentMovies} 
-                windowWidth={windowWidth} 
-                size={images.poster_sizes[0]} />
+            <Title icon='popcorn'>Upcoming Movies</Title>
+            <MovieSection>
+                <Movies 
+                    movies={recentMovies} 
+                    windowWidth={windowWidth} 
+                    size={images.poster_sizes[0]} />
+            </MovieSection>
         </div>
     )
 }

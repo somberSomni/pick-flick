@@ -7,6 +7,9 @@ import  { MOVIEDB_KEY } from '../env.json';
 import Chip from '@material-ui/core/Chip';
 import People from '../components/People.jsx';
 import Movies from '../components/Movies.jsx';
+import Title from '../components/Title.jsx';
+import Loader from '../components/Loader.jsx';
+import MovieSection from '../components/MovieSection.jsx';
 
 const MovieHeader = styled.header`
     display: flex;
@@ -25,6 +28,7 @@ const TitleSection = styled.section`
     align-items: flex-start;
     width: 100vw;
     border-bottom: ${props => props.mobile ? 'none' : '2px solid #CCC'};
+    height: auto;
 `;
 
 const TitleInfo = styled.div`
@@ -35,10 +39,14 @@ const TitleInfo = styled.div`
     min-width: ${props => props.mobile ? '100vw' : '200px'};
     margin-bottom: -10px;
     border-bottom: ${props => props.mobile ?  '2px solid #CCC' : 'none'};
+    background: #DDD;
+    height: ${props => props.mobile ?  'auto' : '100%'};
+    border-radius: 0px 0px 10px 0px;
 `;
 
-const Tagline = styled.h5`
+const Tagline = styled.h6`
     margin-top: -10px;
+    padding: 0px 25px;
 `;
 
 const InfoSection = styled.section`
@@ -65,10 +73,17 @@ const Genres = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-bottom: 10px;
 `;
 
 const Container = styled.div`
     padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: ${props => props.loading ? 'center' : 'flex-start'};
+    height: ${props => props.loading ? '100vh' : 'auto'};
 `;
 
 const Cast = styled.div`
@@ -77,11 +92,6 @@ const Cast = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-
-`;
-
-const LikeThis = styled.div`
-
 `;
 
 export default function MoviePage({match, mobile, windowWidth}) {
@@ -90,7 +100,9 @@ export default function MoviePage({match, mobile, windowWidth}) {
     const [crew, setCrew] = useState([]);
     const [recommendations, setRecommendations] = useState([]);
     const [similar, setSimilar] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
+        window.scrollTo(0,0);
         axios.get(`https://api.themoviedb.org/3/movie/${match.params.id}?api_key=${MOVIEDB_KEY}`)
         .then(res => {
             const { data, status } = res;
@@ -124,57 +136,73 @@ export default function MoviePage({match, mobile, windowWidth}) {
                 setSimilar(results);
             }
         })
+        .finally(() => {
+            setLoading(false);
+        })
         .catch(err => {
             console.log(err.message);
         })
-    }, [])
+    }, [match.params.id])
     const { backdrop_path, genres, title, vote_average, tagline, overview, release_date} = movie;
     const date = release_date ? new Date(release_date) : null;
     return (
-        <Container>
-            {Object.keys(movie).length > 0 ? 
+        <Container loading={loading}>
+            {loading ? <Loader /> : 
             (<React.Fragment>
-                <MovieHeader url={`https://image.tmdb.org/t/p/${images.backdrop_sizes[2]}/${backdrop_path}`}>
-                </MovieHeader>
-                <TitleSection mobile={mobile}>
-                    <TitleInfo mobile={mobile}>
-                        <div>
-                            <h1>{title}</h1>
-                            <Tagline>{tagline}</Tagline>
-                        </div>
-                        {vote_average === 0 ? 'N/A' : <VisualRating rating={vote_average} />}
-                    </TitleInfo>
-                    <InfoSection>
-                        <h5 style={{ marginBottom: -20 }}>overview</h5>
-                        <Overview>{overview}</Overview>
-                        <h5>Release date: {date ? date.toLocaleDateString('en-US') : ''} </h5>
-                        <Genres>
-                            {genres.map(genre => 
-                                <Chip 
-                                    key={genre.id} 
-                                    size="small" 
-                                    style={{ width: 100, margin: 5}}
-                                    label={genre.name}/>)}
-                        </Genres>
-                    </InfoSection>
-                </TitleSection>
-            </React.Fragment>) : null }
-            <h3>Cast <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>in order of appearance</span></h3>
-            <Movies 
-                movies={recommendations} 
-                windowWidth={windowWidth} 
-                size={images.poster_sizes[0]} />
-            <Cast>
-                { cast.slice(0,20).map((actor, i) => 
-                    <People 
-                        key={actor.credit_id} 
-                        i={i}
-                        mobile={mobile}
-                        size={images.profile_sizes[0]}
-                        {...actor} />
-                    )
-                }
-            </Cast>
+                {Object.keys(movie).length > 0 ? 
+                (<React.Fragment>
+                    <MovieHeader url={`https://image.tmdb.org/t/p/${images.backdrop_sizes[2]}/${backdrop_path}`}>
+                    </MovieHeader>
+                    <TitleSection mobile={mobile}>
+                        <TitleInfo mobile={mobile}>
+                            <div>
+                                <h1>{title}</h1>
+                                <Tagline>{tagline}</Tagline>
+                            </div>
+                            {vote_average === 0 ? 'N/A' : <VisualRating rating={vote_average} />}
+                        </TitleInfo>
+                        <InfoSection>
+                            <h5 style={{ marginBottom: -20 }}>overview</h5>
+                            <Overview>{overview}</Overview>
+                            <h5>Release date: {date ? date.toLocaleDateString('en-US') : ''} </h5>
+                            <Genres>
+                                {genres.map(genre => 
+                                    <Chip 
+                                        key={genre.id} 
+                                        size="small" 
+                                        style={{ width: 100, margin: 5}}
+                                        label={genre.name}/>)}
+                            </Genres>
+                        </InfoSection>
+                    </TitleSection>
+                </React.Fragment>) : null }
+                <Title icon='popcorn'>Similar Movies</Title>
+                <MovieSection>
+                    <Movies 
+                        movies={similar} 
+                        windowWidth={windowWidth} 
+                        size={images.poster_sizes[0]} />
+                </MovieSection>
+                <Title icon='thumbs-up'>Recommended Movies</Title>
+                <MovieSection>
+                    <Movies 
+                        movies={recommendations} 
+                        windowWidth={windowWidth} 
+                        size={images.poster_sizes[0]} />
+                </MovieSection>
+                <Title>Cast <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>in order of appearance</span></Title>
+                <Cast>
+                    { cast.slice(0,20).map((actor, i) => 
+                        <People 
+                            key={actor.credit_id} 
+                            i={i}
+                            mobile={mobile}
+                            size={images.profile_sizes[0]}
+                            {...actor} />
+                        )
+                    }
+                </Cast>
+            </React.Fragment>)  }
         </Container>
     )
 }

@@ -12,7 +12,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 // } from '@fortawesome/pro-duotone-svg-icons';
 import { faMapMarkerCheck } from '@fortawesome/pro-solid-svg-icons';
 import { faChevronLeft, faChevronRight, faFilm, faHandPointer, faSearch } from '@fortawesome/pro-regular-svg-icons';
-import { faArrowCircleRight, faArrowCircleLeft } from '@fortawesome/pro-light-svg-icons';
+import { faArrowCircleRight, faArrowCircleLeft, faPopcorn, faThumbsUp } from '@fortawesome/pro-light-svg-icons';
 import './App.css';
 library.add(
   faMapMarkerCheck,
@@ -22,7 +22,9 @@ library.add(
   faHandPointer,
   faSearch,
   faArrowCircleRight,
-  faArrowCircleLeft 
+  faArrowCircleLeft, 
+  faPopcorn, 
+  faThumbsUp
 );
 
 export default function App() {
