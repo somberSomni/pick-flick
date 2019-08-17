@@ -5,6 +5,8 @@ import { VisualRating } from '../components/Rating.jsx';
 import { images } from '../config/moviedb.json';
 import  { MOVIEDB_KEY } from '../env.json';
 import Chip from '@material-ui/core/Chip';
+import People from '../components/People.jsx';
+import Movies from '../components/Movies.jsx';
 
 const MovieHeader = styled.header`
     display: flex;
@@ -14,7 +16,7 @@ const MovieHeader = styled.header`
     background-position-x: center;
     background-position-y: top;
     width: 100vw;
-    height: 200px;
+    height: 250px;
 `;
 
 const TitleSection = styled.section`
@@ -22,6 +24,7 @@ const TitleSection = styled.section`
     flex-direction: ${props => props.mobile ? 'column' : 'row' };
     align-items: flex-start;
     width: 100vw;
+    border-bottom: ${props => props.mobile ? 'none' : '2px solid #CCC'};
 `;
 
 const TitleInfo = styled.div`
@@ -30,9 +33,8 @@ const TitleInfo = styled.div`
     justify-content: ${props => props.mobile ? 'space-between' : 'center'};
     align-items: center;
     min-width: ${props => props.mobile ? '100vw' : '200px'};
-    padding: 25px;
-    margin-bottom: -20px;
-    border-bottom: 2px solid #CCC;
+    margin-bottom: -10px;
+    border-bottom: ${props => props.mobile ?  '2px solid #CCC' : 'none'};
 `;
 
 const Tagline = styled.h5`
@@ -65,13 +67,29 @@ const Genres = styled.div`
     width: 100%;
 `;
 
-export default function MoviePage({match, mobile}) {
+const Container = styled.div`
+    padding-top: 50px;
+`;
+
+const Cast = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+`;
+
+const LikeThis = styled.div`
+
+`;
+
+export default function MoviePage({match, mobile, windowWidth}) {
     const [movie, setMovie] = useState({});
     const [cast, setCast] = useState([]);
     const [crew, setCrew] = useState([]);
     const [recommendations, setRecommendations] = useState([]);
     const [similar, setSimilar] = useState([]);
-    console.log(mobile, 'mobile');
     useEffect(() => {
         axios.get(`https://api.themoviedb.org/3/movie/${match.params.id}?api_key=${MOVIEDB_KEY}`)
         .then(res => {
@@ -85,6 +103,7 @@ export default function MoviePage({match, mobile}) {
             const { data, status } = res;
             if(status === 200) {
                 const { cast, crew } = data;
+                console.log(cast, crew);
                 setCrew(crew);
                 setCast(cast);
                 return axios.get(`https://api.themoviedb.org/3/movie/${match.params.id}/recommendations?api_key=${MOVIEDB_KEY}`)
@@ -112,7 +131,7 @@ export default function MoviePage({match, mobile}) {
     const { backdrop_path, genres, title, vote_average, tagline, overview, release_date} = movie;
     const date = release_date ? new Date(release_date) : null;
     return (
-        <div>
+        <Container>
             {Object.keys(movie).length > 0 ? 
             (<React.Fragment>
                 <MovieHeader url={`https://image.tmdb.org/t/p/${images.backdrop_sizes[2]}/${backdrop_path}`}>
@@ -140,6 +159,22 @@ export default function MoviePage({match, mobile}) {
                     </InfoSection>
                 </TitleSection>
             </React.Fragment>) : null }
-        </div>
+            <h3>Cast <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>in order of appearance</span></h3>
+            <Movies 
+                movies={recommendations} 
+                windowWidth={windowWidth} 
+                size={images.poster_sizes[0]} />
+            <Cast>
+                { cast.slice(0,20).map((actor, i) => 
+                    <People 
+                        key={actor.credit_id} 
+                        i={i}
+                        mobile={mobile}
+                        size={images.profile_sizes[0]}
+                        {...actor} />
+                    )
+                }
+            </Cast>
+        </Container>
     )
 }

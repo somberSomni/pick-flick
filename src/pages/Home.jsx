@@ -34,7 +34,7 @@ export default function Home({windowWidth, mobile}) {
         })
     }, [])
     return (
-        <div>
+        <div style={{ paddingTop: 50 }}>
             <Feature 
                 mobile={mobile}
                 windowWidth={windowWidth}

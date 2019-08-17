@@ -14,7 +14,7 @@ const MoviesContainer = styled.div`
 
 const FabContainer = styled.div`
     position: absolute;
-    z-index: 99;
+    z-index: 89;
     top: 50%;
     ${props => props.left ? 'left: 0' : 'right: 0'};
     transform: translateY(-50%);
