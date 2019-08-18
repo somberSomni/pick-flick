@@ -33,7 +33,6 @@ library.add(
 export default function App() {
   const [mobile, setMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
-  const [searching, setSearching] = useState(false);
   function handleResize(e) {
     const { innerWidth } = e ? e.target : window;
     setWindowWidth(innerWidth);
@@ -45,10 +44,6 @@ export default function App() {
   }
   const throttledResize = throttle(handleResize, 100, { trailing: false, leading: true });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setSearching(true);
-  }
 
   useEffect(() => {
     handleResize();
@@ -61,9 +56,7 @@ export default function App() {
   return (
     <div className='App'>
       <Router>
-        <AppHeader 
-          handleSubmit={handleSubmit}
-          searching={searching} />
+        <AppHeader />
         <Switch>
           <Route exact path='/' render={props => 
             <Home 
@@ -78,8 +71,6 @@ export default function App() {
           <Route path='/search' render={props => 
             <Search 
               mobile={mobile} 
-              searching={searching}
-              setSearching={setSearching}
               {...props} />} />
         </Switch>
         <Footer />

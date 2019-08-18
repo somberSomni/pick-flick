@@ -10,11 +10,11 @@ const LoaderContainer = styled.div`
 export default function Loader() {
     return (
         <LoaderContainer>
-            <h1 style={{ fontFamily: 'Graduate' }}>Finding the movie</h1>
+            <h2 style={{ fontFamily: 'Graduate' }}>Finding the movie</h2>
             <FontAwesomeIcon 
                 size='4x'
                 icon={['fal', 'popcorn']} />
-            <h3>Please be patient</h3>
+            <h4>Please be patient</h4>
             <CircularProgress />
         </LoaderContainer>
     )

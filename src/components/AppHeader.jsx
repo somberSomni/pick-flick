@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, NavLink } from 'react-router-dom';
 
 const Header = styled.header`
     display: flex;
@@ -45,14 +45,18 @@ const MainIcon = styled.div`
     }
 `;
 
-export default function AppHeader({searching, handleSubmit}) {
+export default function AppHeader({searching}) {
     const inputRef = useRef(null);
     const [focused, setFocused] = useState(false);
     const [search, setSearch] = useState('');
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        window.location.href = '/search?q=' + search.trim();
+      }
+    
     return (
         <React.Fragment>
-            {searching ? <Redirect push to={{ pathname: '/search', state: { query: search }}} /> : null}
                 <Header>
                     <Link to='/'>
                         <MainIcon>
@@ -69,6 +73,9 @@ export default function AppHeader({searching, handleSubmit}) {
                         }}>Pick Flicks</h3>
                         </MainIcon>
                     </Link>
+                    <NavLink to='/search'>
+                        <h5 style={{ fontFamily: 'Graduate' }}>Discover</h5>
+                    </NavLink>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'row',
@@ -85,7 +92,9 @@ export default function AppHeader({searching, handleSubmit}) {
                                 value={search}
                                 onFocus={() => { setFocused(true)}} 
                                 onBlur={() => { setFocused(false)}}
-                                onChange={e => { setSearch(e.target.value) }}
+                                onChange={e => { 
+                                    setSearch(e.target.value) 
+                                }}
                                 focused={focused}/>
                         </form>
                     </div>

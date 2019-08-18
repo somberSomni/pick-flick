@@ -38,8 +38,8 @@ export default function People({character, size, profile_path, name, i, mobile})
             odd={ i % 2 !== 0}
             mobile={mobile}>
             <Profile url={profile_path ? `https://image.tmdb.org/t/p/${size}/${profile_path}` : profile} />
-            <h5 style={{ margin: mobile ? 10 : -5 }}>{name}</h5>
-            <p style={{ fontSize: '0.8em',  margin: mobile ? 10 : 0 }}>{character}</p>
+            <h5 style={{ margin: mobile ? 10 : -2 }}>{name}</h5>
+            <p style={{ fontSize: '0.8em',  margin: mobile ? 10 : 2 }}>{character}</p>
         </Container>
     )
 }

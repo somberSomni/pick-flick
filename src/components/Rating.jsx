@@ -15,6 +15,7 @@ const RatingContainer = styled.h1`
     transform: translate(-50%, -50%);
     margin-top: 0;
     position: absolute;
+    font-size: ${props => props.width/100 }em;
 `;
 
 const VisualContainer = styled.div`
@@ -32,7 +33,7 @@ export default function Rating({ rating }) {
     )
 }
 
-export function VisualRating({ rating }) {
+export function VisualRating({ rating, w }) {
     const [color, setColor] = useState('red');
     const duration = 3000;
     function setAngle(r) {
@@ -59,12 +60,10 @@ export function VisualRating({ rating }) {
                 direction: 'alternate',
                 loop: 0
               });
-              console.log(rating)
-              console.log(rating, 'rating');
             setColor(getColor(rating));
         }
     }, [rating]);
-    const width = 100;
+    const width = w || 100;
     const x = width / 2;
     const y = width / 2;
     const angle = setAngle(rating);
@@ -74,6 +73,7 @@ export function VisualRating({ rating }) {
         <VisualContainer size={width}>
             <RatingContainer 
                 color={color}
+                width={width}
                 duration={duration}>
                 {rating}
             </RatingContainer>

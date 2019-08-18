@@ -6,7 +6,7 @@ import SiteFeature from './SiteFeature.jsx';
 const FooterContainer = styled.div`
     width: 100vw;
     height: auto;
-    background: linear-gradient(#222, rgb(0,10,50));
+    background: linear-gradient(rgb(50,0,10), rgb(200,0,100));
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

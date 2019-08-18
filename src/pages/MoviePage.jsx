@@ -5,7 +5,7 @@ import { VisualRating } from '../components/Rating.jsx';
 import { images } from '../config/moviedb.json';
 import  { MOVIEDB_KEY } from '../env.json';
 import Chip from '@material-ui/core/Chip';
-import People from '../components/People.jsx';
+import Cast from '../components/Cast.jsx';
 import Movies from '../components/Movies.jsx';
 import Title from '../components/Title.jsx';
 import Loader from '../components/Loader.jsx';
@@ -82,16 +82,8 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    align-content: ${props => props.loading ? 'center' : 'flex-start'};
-    height: ${props => props.loading ? '100vh' : 'auto'};
-`;
-
-const Cast = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
+    align-content: ${props => props.load ? 'center' : 'flex-start'};
+    height: ${props => props.load ? '100vh' : 'auto'};
 `;
 
 export default function MoviePage({match, mobile, windowWidth}) {
@@ -146,7 +138,7 @@ export default function MoviePage({match, mobile, windowWidth}) {
     const { backdrop_path, genres, title, vote_average, tagline, overview, release_date} = movie;
     const date = release_date ? new Date(release_date) : null;
     return (
-        <Container loading={loading}>
+        <Container load={loading}>
             {loading ? <Loader /> : 
             (<React.Fragment>
                 {Object.keys(movie).length > 0 ? 
@@ -199,17 +191,13 @@ export default function MoviePage({match, mobile, windowWidth}) {
                     </MovieSection>
                 </React.Fragment>) : null }
                 <Title>Cast <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>in order of appearance</span></Title>
-                {cast.length > 0 ? <Cast>
-                    { cast.slice(0,20).map((actor, i) => 
-                        <People 
-                            key={actor.credit_id} 
-                            i={i}
-                            mobile={mobile}
-                            size={images.profile_sizes[0]}
-                            {...actor} />
-                        )
-                    }
-                </Cast> : <h1>Currently No Cast Info</h1>}
+                {cast.length > 0 ? 
+                <Cast 
+                    isCast={true}
+                    size={images.profile_sizes[0]}
+                    mobile={mobile}
+                    cast={cast} /> : 
+                <h1>Currently No Cast Info</h1>}
             </React.Fragment>)  }
         </Container>
     )

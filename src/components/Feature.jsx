@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { VisualRating } from '../components/Rating.jsx';
 import Chip from '@material-ui/core/Chip';
+import { Link } from 'react-router-dom';
 
 const FeatureContainer = styled.section`
     position: relative;
@@ -52,24 +53,26 @@ const Header = styled.div`
 //     flex-wrap: wrap;
 // `;
 
-export default function Feature({ genres, windowWidth, backdrop_path, title, overview, poster_path, vote_average, size, mobile }) {
+export default function Feature({ id, windowWidth, backdrop_path, title, overview, poster_path, vote_average, size, mobile }) {
     return (
-        <FeatureContainer mobile={windowWidth < 800}>
-            <FeatureHeader 
-                url={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
-                mobile={windowWidth < 800}></FeatureHeader>
-            <FeatureInfo width={windowWidth < 800 ? '100%' : '35%'} >
-                <div style={{ 
-                    padding: 25, 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center' }}>
-                    <h1>{title}</h1>
-                    {vote_average === 0 ? 'N/A' : <VisualRating rating={vote_average} />}
-                    <p>{overview}</p>
-                </div>
-            </FeatureInfo>
-        </FeatureContainer>
+        <Link to={`/movie/${id}`}>
+            <FeatureContainer mobile={windowWidth < 800}>
+                <FeatureHeader 
+                    url={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
+                    mobile={windowWidth < 800}></FeatureHeader>
+                <FeatureInfo width={windowWidth < 800 ? '100%' : '35%'} >
+                    <div style={{ 
+                        padding: 25, 
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center' }}>
+                        <h1>{title}</h1>
+                        {vote_average === 0 ? 'N/A' : <VisualRating rating={vote_average} />}
+                        <p>{overview}</p>
+                    </div>
+                </FeatureInfo>
+            </FeatureContainer>
+        </Link>
     )
 }
