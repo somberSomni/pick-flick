@@ -18,14 +18,14 @@ const Container = styled.div`
 `;
 
 
-export default function Home({windowWidth, mobile}) {
+export default function Home({windowWidth, mobile, colors }) {
     const [recentMovies, setRecentMovies] = useState([]);
     const [latestMovie, setLatestMovie] = useState({});
     const [nowMovies, setNowMovies] = useState([]);
     const [popularMovies, setPopularMovies] = useState([]);
 
     useEffect(() => {
-        console.log(MOVIEDB_KEY);
+        window.scrollTo(0,0);
         ///movie/upcoming
         axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${MOVIEDB_KEY}`)
         .then(res => {
@@ -63,21 +63,21 @@ export default function Home({windowWidth, mobile}) {
                 size={mobile ? images.poster_sizes[4] : images.poster_sizes[3]}
                 {...latestMovie}/>
             <Title icon='ticket-alt'>Now Showing</Title>
-            <MovieSection>
+            <MovieSection color={colors[1]}>
                 <Movies 
                     movies={nowMovies} 
                     windowWidth={windowWidth} 
                     size={images.poster_sizes[1]} />
             </MovieSection>
             <Title icon='popcorn'>Coming Soon</Title>
-            <MovieSection>
+            <MovieSection color={colors[1]}>
                 <Movies 
                     movies={recentMovies} 
                     windowWidth={windowWidth} 
                     size={images.poster_sizes[1]} />
             </MovieSection>
             <Title icon='popcorn'>Most Popular</Title>
-            <MovieSection>
+            <MovieSection color={colors[1]}>
                 <Movies 
                     movies={popularMovies} 
                     windowWidth={windowWidth} 

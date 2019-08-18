@@ -13,13 +13,8 @@ button {
   cursor: pointer;
 }
 
-a { 
-  color: rgb(102, 154, 233);
-  text-decoration: underline;
-}
-
 a:visited {
-  color: rgb(102, 154, 233);
+  color: #B9CDDA;
   text-decoration: underline white;
 }
 

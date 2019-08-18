@@ -56,7 +56,7 @@ const MovieContainer = styled.div`
 
 const NumbersSpan = styled.span`
     margin: 2px;
-    color: ${props => props.active ? 'rgb(200,0,100)' : '#333'};
+    color: ${props => props.active ? props.color : '#333'};
     opacity: 1;
     transition: opacity 0.5s;
     cursor: pointer;
@@ -65,7 +65,7 @@ const NumbersSpan = styled.span`
     }
 `;
 
-export default function Search({ location, mobile }) {
+export default function Search({ location, mobile, colors }) {
     const [pageNum, setPageNum] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [movies, setMovies] = useState([]);
@@ -138,6 +138,7 @@ export default function Search({ location, mobile }) {
                     if (i <= 5 || i >= totalPages - 2) {
                         nums.push(<NumbersSpan
                             active={i === pageNum}
+                            color={colors[3]}
                             onClick={() => { setPageNum(i) }}
                             key={i.toString()}>
                             {totalPages > 5 && totalPages - 2 === i ? '...' : ''}{i}
@@ -146,6 +147,7 @@ export default function Search({ location, mobile }) {
                 } else if (pageNum >= 5) {
                     if (i <= 2 || (i >= pageNum - 2 && i <= pageNum + 2) || i >= totalPages - 2) {
                         nums.push(<NumbersSpan
+                            color={colors[3]}
                             active={i === pageNum}
                             onClick={() => { setPageNum(i) }}
                             key={i.toString()}>

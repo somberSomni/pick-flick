@@ -19,7 +19,8 @@ const FeatureInfo = styled.div`
     justify-content: center;
     align-items: center;
     align-content: flex-start;
-    width: ${props => props.width}
+    width: ${props => props.width};
+    color: #1D1A31;
 `;
 
 const FeatureHeader = styled.div`

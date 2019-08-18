@@ -13,7 +13,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 // } from '@fortawesome/pro-duotone-svg-icons';
 import { faMapMarkerCheck } from '@fortawesome/pro-solid-svg-icons';
 import { faChevronLeft, faChevronRight, faFilm, faHandPointer, faSearch } from '@fortawesome/pro-regular-svg-icons';
-import { faArrowCircleRight, faArrowCircleLeft, faPopcorn, faThumbsUp, faRoute, faTicketAlt, faChevronUp, faChevronDown } from '@fortawesome/pro-light-svg-icons';
+import { faArrowCircleRight, faArrowCircleLeft, faPopcorn, faThumbsUp, faRoute, faTicketAlt, faChevronUp, faChevronDown, faUsdCircle } from '@fortawesome/pro-light-svg-icons';
 import './App.css';
 library.add(
   faMapMarkerCheck,
@@ -28,14 +28,16 @@ library.add(
   faThumbsUp,
   faRoute,
   faTicketAlt,
-  faChevronUp, faChevronDown
+  faChevronUp, 
+  faChevronDown,
+  faUsdCircle
 );
 
 export default function App() {
   const [mobile, setMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
   const [scrollPos, setScrollPos] = useState(0);
-  const colors = ['#1D1A31', '#B9CDDA'];
+  const colors = ['#1D1A31', '#B9CDDA', '#F1F2EB', '#A6D8D4'];
   function handleResize(e) {
     const { innerWidth } = e ? e.target : window;
     setWindowWidth(innerWidth);
@@ -47,7 +49,6 @@ export default function App() {
   }
 
   function handleScroll(e) {
-    console.log(window.pageYOffset);
     const { pageYOffset } =  window;
     setScrollPos(pageYOffset);
   }
@@ -72,17 +73,20 @@ export default function App() {
         <Switch>
           <Route exact path='/' render={props => 
             <Home 
+              colors={colors}
               mobile={mobile} 
               windowWidth={windowWidth} 
               {...props} />} />
           <Route path='/movie/:id' render={props => 
             <MoviePage 
+              colors={colors}
               mobile={mobile} 
               windowWidth={windowWidth} 
               scrollPos={scrollPos}
               {...props} />} />
           <Route path='/search' render={props => 
             <Search 
+              colors={colors}
               mobile={mobile} 
               {...props} />} />
         </Switch>
