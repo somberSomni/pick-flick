@@ -1,6 +1,7 @@
 import React from 'react';
 import profile from '../images/profile.png';
 import styled from 'styled-components';
+import { peopleFadeInLeft, peopleFadeInRight, peopleFadeInUp, peopleFadeInDown } from './Animation';
 
 const Profile = styled.img`
     border-radius: 50%;
@@ -27,14 +28,16 @@ const Container = styled.div`
     margin: 2px;
     border-radius: 5px;
     cursor: pointer;
+    animation: 1s ${props => props.left ? (props.mobile ? peopleFadeInDown : peopleFadeInLeft) : (props.mobile ? peopleFadeInUp : peopleFadeInRight) } ease-out both;
     &:hover {
         box-shadow: 1px 1px 3px 1px rgba(0,0,0, 0.4);
     }
 `;
 
-export default function People({character, size, profile_path, name, i, mobile}) {
+export default function People({character, size, profile_path, name, i, mobile, left}) {
     return (
         <Container 
+            left={left}
             odd={ i % 2 !== 0}
             mobile={mobile}>
             <Profile url={profile_path ? `https://image.tmdb.org/t/p/${size}/${profile_path}` : profile} />

@@ -13,7 +13,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 // } from '@fortawesome/pro-duotone-svg-icons';
 import { faMapMarkerCheck } from '@fortawesome/pro-solid-svg-icons';
 import { faChevronLeft, faChevronRight, faFilm, faHandPointer, faSearch } from '@fortawesome/pro-regular-svg-icons';
-import { faArrowCircleRight, faArrowCircleLeft, faPopcorn, faThumbsUp, faRoute, faTicketAlt } from '@fortawesome/pro-light-svg-icons';
+import { faArrowCircleRight, faArrowCircleLeft, faPopcorn, faThumbsUp, faRoute, faTicketAlt, faChevronUp, faChevronDown } from '@fortawesome/pro-light-svg-icons';
 import './App.css';
 library.add(
   faMapMarkerCheck,
@@ -27,12 +27,15 @@ library.add(
   faPopcorn, 
   faThumbsUp,
   faRoute,
-  faTicketAlt
+  faTicketAlt,
+  faChevronUp, faChevronDown
 );
 
 export default function App() {
   const [mobile, setMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+  const [scrollPos, setScrollPos] = useState(0);
+  const colors = ['#1D1A31', '#B9CDDA'];
   function handleResize(e) {
     const { innerWidth } = e ? e.target : window;
     setWindowWidth(innerWidth);
@@ -42,21 +45,30 @@ export default function App() {
       setMobile(false);
     }
   }
-  const throttledResize = throttle(handleResize, 100, { trailing: false, leading: true });
 
+  function handleScroll(e) {
+    console.log(window.pageYOffset);
+    const { pageYOffset } =  window;
+    setScrollPos(pageYOffset);
+  }
+
+  const throttledResize = throttle(handleResize, 100, { trailing: false, leading: true });
+  const throttledScroll = throttle(handleScroll, 100, { trailing: false, leading: true });
 
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', throttledResize);
+    window.addEventListener('scroll', throttledScroll)
     return () => {
       window.removeEventListener('resize', throttledResize);
+      window.removeEventListener('resize', throttledScroll);
     }
   }, [])
 
   return (
     <div className='App'>
       <Router>
-        <AppHeader />
+        <AppHeader mobile={mobile} />
         <Switch>
           <Route exact path='/' render={props => 
             <Home 
@@ -67,13 +79,14 @@ export default function App() {
             <MoviePage 
               mobile={mobile} 
               windowWidth={windowWidth} 
+              scrollPos={scrollPos}
               {...props} />} />
           <Route path='/search' render={props => 
             <Search 
               mobile={mobile} 
               {...props} />} />
         </Switch>
-        <Footer />
+        <Footer colors={colors} />
       </Router>
     </div>
   );

@@ -17,7 +17,8 @@ const MovieHeader = styled.header`
     background: url(${props => props.url});
     background-size: cover;
     background-position-x: center;
-    background-position-y: top;
+    background-position-y: ${props => props.pos < 300 ? props.pos / -10 : 0}px;
+    transition: background-position-y 0.5s;
     width: 100vw;
     height: 250px;
 `;
@@ -86,7 +87,7 @@ const Container = styled.div`
     height: ${props => props.load ? '100vh' : 'auto'};
 `;
 
-export default function MoviePage({match, mobile, windowWidth}) {
+export default function MoviePage({match, mobile, windowWidth, scrollPos}) {
     const [movie, setMovie] = useState({});
     const [cast, setCast] = useState([]);
     const [crew, setCrew] = useState([]);
@@ -143,7 +144,10 @@ export default function MoviePage({match, mobile, windowWidth}) {
             (<React.Fragment>
                 {Object.keys(movie).length > 0 ? 
                 (<React.Fragment>
-                    {backdrop_path ? <MovieHeader url={`https://image.tmdb.org/t/p/${images.backdrop_sizes[2]}/${backdrop_path}`}>
+                    {backdrop_path ? 
+                    <MovieHeader 
+                        pos={scrollPos}
+                        url={`https://image.tmdb.org/t/p/${images.backdrop_sizes[2]}/${backdrop_path}`}>
                     </MovieHeader> : null}
                     <TitleSection mobile={mobile}>
                         <TitleInfo mobile={mobile}>
@@ -191,13 +195,24 @@ export default function MoviePage({match, mobile, windowWidth}) {
                     </MovieSection>
                 </React.Fragment>) : null }
                 <Title>Cast <span style={{ fontStyle: 'italic', fontSize: '0.8em' }}>in order of appearance</span></Title>
+                <MovieSection>
                 {cast.length > 0 ? 
-                <Cast 
-                    isCast={true}
-                    size={images.profile_sizes[0]}
-                    mobile={mobile}
-                    cast={cast} /> : 
-                <h1>Currently No Cast Info</h1>}
+                   <Cast 
+                        isCast={true}
+                        size={images.profile_sizes[0]}
+                        mobile={mobile}
+                        cast={cast} /> : 
+                    <h1>Currently No Cast Info</h1>}
+               </MovieSection>
+                <Title>Crew </Title>
+    
+                    {crew.length > 0 ? 
+                    <Cast 
+                        isCast={false}
+                        size={images.profile_sizes[0]}
+                        mobile={mobile}
+                        cast={crew} /> : 
+                    <h1>Currently No Crew Info</h1>}
             </React.Fragment>)  }
         </Container>
     )

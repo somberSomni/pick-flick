@@ -90,6 +90,7 @@ export default function Search({ location, mobile }) {
     }
     useEffect(() => {
         //console.log('searching ', query)
+        window.scrollTo(0,0);
         if (query.length > 0) {
             if (pageNum <= totalPages) {
                 axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${MOVIEDB_KEY}&query=${query.length > 0 ? query : location.state.query.trim()}&page=${pageNum}`)

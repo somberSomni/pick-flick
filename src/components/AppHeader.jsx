@@ -45,7 +45,7 @@ const MainIcon = styled.div`
     }
 `;
 
-export default function AppHeader({searching}) {
+export default function AppHeader({mobile}) {
     const inputRef = useRef(null);
     const [focused, setFocused] = useState(false);
     const [search, setSearch] = useState('');
@@ -83,7 +83,7 @@ export default function AppHeader({searching}) {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        <FontAwesomeIcon icon={['far', 'search']} />
+                        {mobile ? null : <FontAwesomeIcon icon={['far', 'search']} />}
                         <form onSubmit={handleSubmit}>
                             <Search 
                                 type='text'
