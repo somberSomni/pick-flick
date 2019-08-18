@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { VisualRating } from '../components/Rating.jsx';
 import { images } from '../config/moviedb.json';
-import { MOVIEDB_KEY } from '../env.json';
+import env from '../env';
 import Chip from '@material-ui/core/Chip';
 import Cast from '../components/Cast.jsx';
 import Movies from '../components/Movies.jsx';
@@ -13,6 +13,7 @@ import MovieSection from '../components/MovieSection.jsx';
 import { peopleFadeInLeft } from '../components/Animation.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+const {MOVIEDB_KEY } = env;
 const MovieHeader = styled.header`
     display: flex;
     flex-direction: row;

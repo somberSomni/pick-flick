@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MOVIEDB_KEY } from '../env.json';
+import env from '../env';
 import styled from 'styled-components';
 import MovieLarge from '../components/MovieLarge.jsx';
 import Loader from '../components/Loader.jsx';
-
+const {MOVIEDB_KEY }= env;
 const SearchContainer = styled.div`
     padding-top: 50px;
     min-height: 5;

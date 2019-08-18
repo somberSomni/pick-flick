@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { images } from '../config/moviedb.json';
-import  { MOVIEDB_KEY } from '../env.json';
+import  env from '../env';
 //components
 import Movies from '../components/Movies.jsx';
 import Feature from '../components/Feature.jsx';
@@ -9,6 +9,7 @@ import MovieSection from '../components/MovieSection.jsx';
 import Title from '../components/Title.jsx';
 import styled from 'styled-components';
 
+const { MOVIEDB_KEY } = env;
 const Container = styled.div`
     padding-top: 50px;
     display: flex;
