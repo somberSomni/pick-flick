@@ -58,6 +58,7 @@ export default function Cast({ cast, size, mobile, isCast }) {
                         key={actor.credit_id}
                         i={i}
                         left={left}
+                        isCast={isCast}
                         mobile={mobile}
                         size={size}
                         {...actor} />

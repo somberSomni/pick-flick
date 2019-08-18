@@ -103,6 +103,16 @@ const Logos = styled.div`
     width: 100vw;
 `;
 
+const CastSection = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: no-wrap;
+`;
+
+const Member = styled.div`
+    margin: 0px 10px;
+
+`;
 
 export default function MoviePage({ colors, match, mobile, windowWidth, scrollPos }) {
     const [movie, setMovie] = useState({});
@@ -126,6 +136,7 @@ export default function MoviePage({ colors, match, mobile, windowWidth, scrollPo
                 const { data, status } = res;
                 if (status === 200) {
                     const { cast, crew } = data;
+                    console.log(crew);
                     setCrew(crew);
                     setCast(cast);
                     return axios.get(`https://api.themoviedb.org/3/movie/${match.params.id}/recommendations?api_key=${MOVIEDB_KEY}`)
@@ -196,7 +207,7 @@ export default function MoviePage({ colors, match, mobile, windowWidth, scrollPo
                                         <Tagline>{tagline}</Tagline>
                                     </div>
                                     {vote_average === 0 ? 'N/A' : <VisualRating rating={vote_average} />}
-                                    <div>
+                                    { mobile ? null : <div>
 
                                         <h6>Runtime </h6>
                                         <p style={{
@@ -206,7 +217,7 @@ export default function MoviePage({ colors, match, mobile, windowWidth, scrollPo
                                         }}>
                                             {Math.floor(runtime / 60)}hr {runtime % 60}mins
                                         </p>
-                                    </div>
+                                    </div> }
                                 </TitleInfo>
                                 <InfoSection>
                                     <div>
@@ -239,6 +250,16 @@ export default function MoviePage({ colors, match, mobile, windowWidth, scrollPo
                                         )}
 
                                     </Genres>
+                                    <CastSection>
+                                        {crew.length >= 2 ? crew.slice(0,2).map(member => {
+                                            return (
+                                                <Member>
+                                                    <h3>{member.job}</h3>
+                                                    <p>{member.name}</p>
+                                                </Member>
+                                            )
+                                        }) : null}
+                                    </CastSection>
                                 </InfoSection>
                             </TitleSection>
                         </React.Fragment>) : null}

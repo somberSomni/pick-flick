@@ -34,7 +34,7 @@ const Container = styled.div`
     }
 `;
 
-export default function People({character, size, profile_path, name, i, mobile, left}) {
+export default function People({character, job, size, profile_path, name, i, mobile, left, isCast}) {
     return (
         <Container 
             left={left}
@@ -42,7 +42,7 @@ export default function People({character, size, profile_path, name, i, mobile, 
             mobile={mobile}>
             <Profile url={profile_path ? `https://image.tmdb.org/t/p/${size}/${profile_path}` : profile} />
             <h5 style={{ margin: mobile ? 10 : -2 }}>{name}</h5>
-            <p style={{ fontSize: '0.8em',  margin: mobile ? 10 : 2 }}>{character}</p>
+            <p style={{ fontSize: '0.8em',  margin: mobile ? 10 : 2 }}>{isCast ? character : job}</p>
         </Container>
     )
 }
